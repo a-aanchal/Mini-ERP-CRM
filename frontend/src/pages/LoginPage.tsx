@@ -43,7 +43,9 @@ export const LoginPage: React.FC = () => {
         }
       }
     } catch (err: any) {
-      const msg = err.response?.data?.message || 'Authentication failed. Please check your input.';
+      const serverMessage = err.response?.data?.message;
+      const validationError = err.response?.data?.errors?.[0]?.message;
+      const msg = serverMessage || validationError || 'Connecting to server... (Render free backend is waking up, please try again in a few seconds)';
       setError(msg);
     } finally {
       setIsLoading(false);
